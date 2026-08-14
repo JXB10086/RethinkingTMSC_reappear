@@ -42,8 +42,8 @@ job_idx=0
 
 run_one() {
   local ds=$1 model=$2 enc=$3 seed=$4 device=$5
-  local out="Code/output/${ds}/${model}/${seed}_output_test"
-  if [ "$SKIP_EXISTING" = "1" ] && [ -f "$out/eval_results.txt" ]; then
+  local out="${OUTPUT_ROOT:-Code/output}/${ds}/${model}/${seed}_output_test"
+  if [ "$SKIP_EXISTING" = "1" ] && { [ -f "$out/eval_results_test.txt" ] || [ -f "$out/eval_results.txt" ]; }; then
     echo "[skip] $ds/$model/$seed 已存在"
     return 0
   fi
@@ -86,4 +86,4 @@ done
 wait
 
 echo "全部完成，汇总结果:"
-python repro/collect_results.py Code/output
+python repro/collect_results.py "${OUTPUT_ROOT:-Code/output}"
