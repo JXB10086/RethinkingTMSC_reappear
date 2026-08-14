@@ -1,6 +1,11 @@
-apex==0.9.10dev
-boto3==1.16.63
-botocore==1.19.63
+# NOTE: torch/torchvision 需单独安装（见下方说明）
+# pip install torch==1.10.0+cpu torchvision==0.11.0+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+#
+# 已移除的包:
+#   apex==0.9.10dev       -- PyPI 不存在，需 NVIDIA GPU，代码有 fallback 可跳过
+#   modeling==0.0.1.dev0  -- PyPI 不存在，代码中未使用
+
+boto3==1.34.131
 cffi==1.14.5
 Cython==0.29.32
 easydict==1.10
@@ -8,20 +13,15 @@ h5py==3.7.0
 imageio==2.22.1
 ipython==7.34.0
 matplotlib==3.5.3
-modeling==0.0.1.dev0
-numpy==1.20.2
+numpy==1.22.4
 opencv_python==4.6.0.66
-Pillow==9.3.0
 Pillow==10.0.1
-pycocotools==2.0.5
-PyYAML==6.0
+pycocotools==2.0.7
 PyYAML==6.0.1
 Requests==2.31.0
 scikit_learn==1.0.2
 scipy==1.7.3
-setuptools==52.0.0.post20210125
-tensorflow==2.14.0
-torch==1.10.0+cu111
-torchvision==0.11.0+cu111
+setuptools==52.0.0
+tensorflow==2.13.0
 tqdm==4.51.0
 transformers==4.22.1

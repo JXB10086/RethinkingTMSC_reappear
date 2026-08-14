@@ -1,0 +1,7 @@
+[1] 微型词表大小 = 64 -> F:\winoptimizeDir\Desktop\RethinkingTMSC\analysis\_smoke_vocab.txt
+[2] 特征构造完成: 8 条, 每条含 input_ids(32) / img_feat((3, 224, 224))
+[3] BERT 训练两步完成, loss = ['1.1018', '1.1070'], 梯度正常 = True
+[4] BERT 推理 logits 形状 = (4, 3), 类别分布 = [4]
+[5] Res22Bert(文本+图像交叉注意力) 前向/反向 loss = 1.0632
+[6] 真实图片加载 Twitter15/1860693.jpg: 形状 (3, 224, 224), 数值范围 [0.00, 1.00]
+[6] 真实图片加载 Twitter17/17_06_10389.jpg: 形状 (3, 224, 224), 数值范围 [0.00, 1.00]

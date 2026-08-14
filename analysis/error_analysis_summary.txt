@@ -1,0 +1,148 @@
+======================================================================
+[Twitter15] 测试样本数 = 1037, 真实标签分布 = {0: 113, 1: 607, 2: 317}
+多数类基线: 全预测为 中性 -> acc = 58.53%
+
+--- 种子 seed=0 的逐类指标 (P/R/F1 %) ---
+          Bert P[65.5 / 80.9 / 74.9] R[63.7 / 83.7 / 70.7] F1[64.6 / 82.3 / 72.7]
+      Bert2Vit P[67.3 / 79.4 / 75.1] R[60.2 / 85.7 / 66.6] F1[63.6 / 82.4 / 70.6]
+  Faster22Bert P[72.4 / 78.1 / 76.8] R[55.8 / 87.3 / 65.6] F1[63.0 / 82.4 / 70.7]
+     Res22Bert P[69.4 / 79.0 / 76.1] R[60.2 / 86.3 / 66.2] F1[64.5 / 82.5 / 70.8]
+       ResBert P[61.8 / 79.0 / 71.1] R[48.7 / 81.1 / 72.9] F1[54.5 / 80.0 / 72.0]
+     Vit22Bert P[72.0 / 75.0 / 77.6] R[52.2 / 89.3 / 56.8] F1[60.5 / 81.5 / 65.6]
+       VitBert P[65.2 / 78.2 / 75.8] R[53.1 / 85.5 / 67.2] F1[58.5 / 81.7 / 71.2]
+
+--- 5 种子多数投票 vs 单种子(seed=0) vs 最优单种子 ---
+     Vit22Bert vote acc=78.50 f1=74.39 | s0 acc=75.31 f1=69.20 | diff_f1=+5.19
+     Res22Bert vote acc=78.78 f1=74.21 | s0 acc=77.34 f1=72.60 | diff_f1=+1.61
+   Bert2Faster vote acc=78.98 f1=74.10 | s0 acc=77.15 f1=71.04 | diff_f1=+3.06
+    ResBertAtt vote acc=78.11 f1=73.81 | s0 acc=74.25 f1=66.10 | diff_f1=+7.71
+      Bert2Res vote acc=78.78 f1=73.69 | s0 acc=76.86 f1=70.70 | diff_f1=+2.99
+      Bert2Vit vote acc=78.59 f1=73.46 | s0 acc=77.05 f1=72.18 | diff_f1=+1.29
+          Bert vote acc=78.21 f1=73.37 | s0 acc=77.53 f1=73.19 | diff_f1=+0.18
+  Faster22Bert vote acc=77.82 f1=72.67 | s0 acc=77.24 f1=72.06 | diff_f1=+0.61
+       VitBert vote acc=77.82 f1=72.57 | s0 acc=76.37 f1=70.48 | diff_f1=+2.09
+    ResBertTFN vote acc=76.18 f1=71.79 | s0 acc=73.38 f1=67.95 | diff_f1=+3.84
+      Vit2Bert vote acc=77.34 f1=71.56 | s0 acc=74.93 f1=68.44 | diff_f1=+3.12
+    FasterBert vote acc=76.86 f1=71.49 | s0 acc=75.51 f1=69.95 | diff_f1=+1.54
+      Res2Bert vote acc=77.34 f1=71.48 | s0 acc=76.28 f1=70.17 | diff_f1=+1.31
+ FasterBertAtt vote acc=77.43 f1=71.37 | s0 acc=76.37 f1=70.07 | diff_f1=+1.30
+       ResBert vote acc=77.34 f1=71.06 | s0 acc=75.02 f1=68.81 | diff_f1=+2.26
+    VitBertAtt vote acc=76.37 f1=70.87 | s0 acc=74.45 f1=68.00 | diff_f1=+2.87
+    VitBertTFN vote acc=75.70 f1=70.59 | s0 acc=72.61 f1=64.92 | diff_f1=+5.66
+ FasterBertTFN vote acc=74.73 f1=70.12 | s0 acc=71.94 f1=65.39 | diff_f1=+4.73
+   Faster2Bert vote acc=73.67 f1=59.88 | s0 acc=72.81 f1=65.13 | diff_f1=-5.25
+    FasterRCNN vote acc=58.53 f1=34.40 | s0 acc=55.16 f1=42.45 | diff_f1=-8.04
+        ResNet vote acc=59.40 f1=30.80 | s0 acc=57.18 f1=30.71 | diff_f1=+0.08
+           Vit vote acc=60.37 f1=30.66 | s0 acc=57.96 f1=29.50 | diff_f1=+1.16
+
+--- 相对文本基线 Bert(seed=0) 的纠正/恶化 (多模态模型, seed=0) ---
+     Res22Bert 纠正=  58 恶化=  60 净=  -2 双对= 744 双错= 175
+  Faster22Bert 纠正=  62 恶化=  65 净=  -3 双对= 739 双错= 171
+   Bert2Faster 纠正=  59 恶化=  63 净=  -4 双对= 741 双错= 174
+      Bert2Vit 纠正=  68 恶化=  73 净=  -5 双对= 731 双错= 165
+      Bert2Res 纠正=  64 恶化=  71 净=  -7 双对= 733 双错= 169
+ FasterBertAtt 纠正=  61 恶化=  73 净= -12 双对= 731 双错= 172
+       VitBert 纠正=  59 恶化=  71 净= -12 双对= 733 双错= 174
+      Res2Bert 纠正=  66 恶化=  79 净= -13 双对= 725 双错= 167
+    FasterBert 纠正=  66 恶化=  87 净= -21 双对= 717 双错= 167
+     Vit22Bert 纠正=  69 恶化=  92 净= -23 双对= 712 双错= 164
+       ResBert 纠正=  69 恶化=  95 净= -26 双对= 709 双错= 164
+      Vit2Bert 纠正=  55 恶化=  82 净= -27 双对= 722 双错= 178
+    VitBertAtt 纠正=  58 恶化=  90 净= -32 双对= 714 双错= 175
+    ResBertAtt 纠正=  73 恶化= 107 净= -34 双对= 697 双错= 160
+    ResBertTFN 纠正=  61 恶化= 104 净= -43 双对= 700 双错= 172
+   Faster2Bert 纠正=  75 恶化= 124 净= -49 双对= 680 双错= 158
+    VitBertTFN 纠正=  67 恶化= 118 净= -51 双对= 686 双错= 166
+ FasterBertTFN 纠正=  65 恶化= 123 净= -58 双对= 681 双错= 168
+           Vit 纠正=  89 恶化= 292 净=-203 双对= 512 双错= 144
+        ResNet 纠正=  96 恶化= 307 净=-211 双对= 497 双错= 137
+    FasterRCNN 纠正= 101 恶化= 333 净=-232 双对= 471 双错= 132
+
+--- 错误率分层: 目标词数 (Bert seed=0) ---
+目标词数 1-1: n=461, 错误率=24.1%
+目标词数 2-2: n=483, 错误率=21.7%
+目标词数 3-9: n=93, 错误率=18.3%
+
+--- 困难样本: 投票集成也错 & 5 模型以上全错的样本 (前 8 条) ---
+  n_models_err=22 真=负面 文本=RT @ RollingStone : Meet the Michael Jackson impersonator who wants to heal $T$ : | 目标=Baltimore
+  n_models_err=22 真=负面 文本=RT @ Musicislove21x : How I feel when I ' m walking in $T$ ' s wind . @ KSUprobs | 目标=Kent
+  n_models_err=22 真=负面 文本=Speaking of the Galbuts , commission just honored memory of matriarch $T$ , who passed awa | 目标=Bessie Galbut
+  n_models_err=22 真=负面 文本=RT @ BeschlossDC : Coretta Scott King with Robert amp $T$ after husband ' s assassination  | 目标=Ethel Kennedy
+  n_models_err=22 真=正面 文本=President handed over gold recovered by the Government from $T$ banks to rightful owners i | 目标=LTTE
+  n_models_err=22 真=正面 文本=RT @ Fernanda FRocha : Old Palace in romantic # Sintra , $T$ Thank you : ) | 目标=Portugal
+  n_models_err=22 真=正面 文本=RT @ CheltenhamRaces : Look out for # charliechicken in $T$ this afternoon giving out free | 目标=Cheltenham
+  n_models_err=22 真=正面 文本=RT @ MarkyMillionz : Views from $T$ . No filter | 目标=Haiti
+======================================================================
+[Twitter17] 测试样本数 = 1234, 真实标签分布 = {0: 168, 1: 573, 2: 493}
+多数类基线: 全预测为 中性 -> acc = 46.43%
+
+--- 种子 seed=0 的逐类指标 (P/R/F1 %) ---
+          Bert P[66.2 / 71.2 / 66.7] R[51.2 / 67.4 / 76.1] F1[57.7 / 69.2 / 71.1]
+      Bert2Vit P[62.0 / 69.9 / 68.6] R[55.4 / 70.5 / 70.4] F1[58.5 / 70.2 / 69.5]
+  Faster22Bert P[64.9 / 71.8 / 66.9] R[59.5 / 67.2 / 73.8] F1[62.1 / 69.4 / 70.2]
+     Res22Bert P[66.2 / 67.6 / 68.2] R[52.4 / 72.8 / 66.9] F1[58.5 / 70.1 / 67.6]
+       ResBert P[60.1 / 68.9 / 69.5] R[53.0 / 71.4 / 69.4] F1[56.3 / 70.1 / 69.4]
+     Vit22Bert P[72.5 / 68.5 / 69.0] R[56.5 / 72.6 / 69.4] F1[63.5 / 70.5 / 69.2]
+       VitBert P[62.3 / 71.5 / 66.7] R[64.9 / 64.0 / 73.8] F1[63.6 / 67.6 / 70.1]
+
+--- 5 种子多数投票 vs 单种子(seed=0) vs 最优单种子 ---
+      Bert2Res vote acc=70.75 f1=68.71 | s0 acc=69.29 f1=65.84 | diff_f1=+2.87
+  Faster22Bert vote acc=70.18 f1=68.37 | s0 acc=68.80 f1=67.25 | diff_f1=+1.12
+      Bert2Vit vote acc=70.10 f1=68.32 | s0 acc=68.40 f1=66.05 | diff_f1=+2.26
+     Vit22Bert vote acc=69.69 f1=68.10 | s0 acc=69.12 f1=67.74 | diff_f1=+0.36
+ FasterBertAtt vote acc=69.69 f1=68.01 | s0 acc=69.12 f1=67.38 | diff_f1=+0.63
+     Res22Bert vote acc=69.69 f1=67.97 | s0 acc=67.67 f1=65.37 | diff_f1=+2.60
+       VitBert vote acc=68.96 f1=67.66 | s0 acc=68.07 f1=67.07 | diff_f1=+0.59
+   Bert2Faster vote acc=69.37 f1=67.54 | s0 acc=68.07 f1=65.07 | diff_f1=+2.47
+    FasterBert vote acc=69.37 f1=67.08 | s0 acc=66.61 f1=63.46 | diff_f1=+3.63
+       ResBert vote acc=69.37 f1=66.94 | s0 acc=68.07 f1=65.29 | diff_f1=+1.65
+    VitBertAtt vote acc=68.64 f1=66.90 | s0 acc=67.99 f1=65.86 | diff_f1=+1.04
+          Bert vote acc=68.96 f1=66.76 | s0 acc=68.64 f1=66.02 | diff_f1=+0.75
+      Res2Bert vote acc=69.53 f1=66.73 | s0 acc=68.48 f1=65.83 | diff_f1=+0.91
+    ResBertAtt vote acc=68.96 f1=66.46 | s0 acc=66.86 f1=64.57 | diff_f1=+1.89
+      Vit2Bert vote acc=69.12 f1=66.32 | s0 acc=67.50 f1=65.08 | diff_f1=+1.24
+    ResBertTFN vote acc=68.64 f1=66.14 | s0 acc=67.59 f1=64.89 | diff_f1=+1.24
+ FasterBertTFN vote acc=68.72 f1=64.95 | s0 acc=67.59 f1=64.68 | diff_f1=+0.27
+    VitBertTFN vote acc=67.26 f1=63.74 | s0 acc=66.21 f1=62.38 | diff_f1=+1.36
+   Faster2Bert vote acc=65.07 f1=57.71 | s0 acc=48.38 f1=41.38 | diff_f1=+16.32
+           Vit vote acc=59.40 f1=53.84 | s0 acc=59.08 f1=54.03 | diff_f1=-0.19
+        ResNet vote acc=58.59 f1=53.23 | s0 acc=58.10 f1=52.90 | diff_f1=+0.33
+    FasterRCNN vote acc=57.70 f1=51.41 | s0 acc=55.11 f1=47.52 | diff_f1=+3.89
+
+--- 相对文本基线 Bert(seed=0) 的纠正/恶化 (多模态模型, seed=0) ---
+      Bert2Res 纠正=  98 恶化=  90 净=  +8 双对= 757 双错= 289
+ FasterBertAtt 纠正=  97 恶化=  91 净=  +6 双对= 756 双错= 290
+     Vit22Bert 纠正= 108 恶化= 102 净=  +6 双对= 745 双错= 279
+  Faster22Bert 纠正=  97 恶化=  95 净=  +2 双对= 752 双错= 290
+      Res2Bert 纠正=  96 恶化=  98 净=  -2 双对= 749 双错= 291
+      Bert2Vit 纠正= 107 恶化= 110 净=  -3 双对= 737 双错= 280
+   Bert2Faster 纠正= 117 恶化= 124 净=  -7 双对= 723 双错= 270
+       ResBert 纠正=  84 恶化=  91 净=  -7 双对= 756 双错= 303
+       VitBert 纠正=  92 恶化=  99 净=  -7 双对= 748 双错= 295
+    VitBertAtt 纠正=  90 恶化=  98 净=  -8 双对= 749 双错= 297
+     Res22Bert 纠正=  99 恶化= 111 净= -12 双对= 736 双错= 288
+ FasterBertTFN 纠正= 102 恶化= 115 净= -13 双对= 732 双错= 285
+    ResBertTFN 纠正= 106 恶化= 119 净= -13 双对= 728 双错= 281
+      Vit2Bert 纠正=  84 恶化=  98 净= -14 双对= 749 双错= 303
+    ResBertAtt 纠正=  75 恶化=  97 净= -22 双对= 750 双错= 312
+    FasterBert 纠正=  75 恶化= 100 净= -25 双对= 747 双错= 312
+    VitBertTFN 纠正= 107 恶化= 137 净= -30 双对= 710 双错= 280
+           Vit 纠正= 100 恶化= 218 净=-118 双对= 629 双错= 287
+        ResNet 纠正= 125 恶化= 255 净=-130 双对= 592 双错= 262
+    FasterRCNN 纠正=  96 恶化= 263 净=-167 双对= 584 双错= 291
+   Faster2Bert 纠正= 164 恶化= 414 净=-250 双对= 433 双错= 223
+
+--- 错误率分层: 目标词数 (Bert seed=0) ---
+目标词数 1-1: n=642, 错误率=29.1%
+目标词数 2-2: n=497, 错误率=33.4%
+目标词数 3-9: n=95, 错误率=35.8%
+
+--- 困难样本: 投票集成也错 & 5 模型以上全错的样本 (前 8 条) ---
+  n_models_err=22 真=负面 文本=$T$ ‘ has emerged ’ as serious threat to sign Chris Paul ( per @ ESPNSteinLine ) | 目标=Houston
+  n_models_err=22 真=正面 文本=Dez Bryant believes in rookie $T$ despite Darrelle Revis tweet # cowboys # NFL | 目标=CBs
+  n_models_err=22 真=负面 文本=Listen to @ AggieBaseball take on $T$ in the elimination game tomorrow at 12 : 45 pm on Th | 目标=TCU
+  n_models_err=22 真=负面 文本=Meek Mill beats $T$ , Kendrick Lamar , Future to win Top Rap Album at Billboard Music Awar | 目标=Drake
+  n_models_err=22 真=负面 文本=Meek Mill beats Drake , $T$ , Future to win Top Rap Album at Billboard Music Awards | 目标=Kendrick Lamar
+  n_models_err=22 真=负面 文本=Meek Mill beats Drake , Kendrick Lamar , $T$ to win Top Rap Album at Billboard Music Award | 目标=Future
+  n_models_err=22 真=负面 文本=@ $T$ Congrats ! You have went full Harry Reid stupid ! ! Now sit down . | 目标=RepAdamSchiff
+  n_models_err=22 真=中性 文本=Me , along with a couple of friends - - James Franco and $T$ - - on the set of 11 / 22 / 6 | 目标=JJ Abrams
