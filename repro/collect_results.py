@@ -33,8 +33,13 @@ for ds in sorted(os.listdir(OUTPUT)):
         continue
     for model in sorted(os.listdir(ds_dir)):
         for seed in SEEDS:
-            ef = os.path.join(ds_dir, model, seed + "_output_test", "eval_results.txt")
-            if not os.path.exists(ef):
+            ef = None
+            for fname in ("eval_results_test.txt", "eval_results.txt"):
+                cand = os.path.join(ds_dir, model, seed + "_output_test", fname)
+                if os.path.exists(cand):
+                    ef = cand
+                    break
+            if ef is None or not os.path.exists(ef):
                 continue
             r = parse_eval(ef)
             rows.append({"dataset": ds, "model": model, "seed": seed,
@@ -49,13 +54,19 @@ with open(os.path.join(OUTPUT, "results_all.csv"), "w", newline="", encoding="ut
 summary = defaultdict(list)
 for r in rows:
     summary[(r["dataset"], r["model"])].append(r)
+
+
+def sd(x):
+    return st.stdev(x) if len(x) >= 2 else 0.0
+
+
 with open(os.path.join(OUTPUT, "results_summary.csv"), "w", newline="", encoding="utf-8-sig") as f:
     w = csv.writer(f)
     w.writerow(["dataset", "model", "acc_mean", "acc_std", "f1_mean", "f1_std", "n_seeds"])
     for (ds, model) in sorted(summary):
         rs = summary[(ds, model)]
         w.writerow([ds, model,
-                    f"{st.mean(r['accuracy'] for r in rs):.4f}", f"{st.stdev(r['accuracy'] for r in rs):.4f}",
-                    f"{st.mean(r['f1'] for r in rs):.4f}", f"{st.stdev(r['f1'] for r in rs):.4f}",
+                    f"{st.mean(r['accuracy'] for r in rs):.4f}", f"{sd([r['accuracy'] for r in rs]):.4f}",
+                    f"{st.mean(r['f1'] for r in rs):.4f}", f"{sd([r['f1'] for r in rs]):.4f}",
                     len(rs)])
 print(f"汇总 {len(rows)} 次运行 -> {OUTPUT}/results_all.csv")
