@@ -33,6 +33,8 @@ fi
 
 enc_for() {
   case "$1" in
+    *2Vit)     echo vit ;;
+    *2Faster)  echo faster ;;
     Bert|Res*) echo resnet ;;
     Vit*)      echo vit ;;
     Faster*)   echo faster ;;
