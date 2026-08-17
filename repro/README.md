@@ -25,7 +25,8 @@ bash repro/download_assets.sh
 # ② 安装环境（自动修复代码中硬编码的 /root/RethinkingTMSC 路径、编译 faster_rcnn）
 bash repro/setup_env.sh
 
-# ③ 全量复现（2 数据集 × 22 模型 × 5 种子 = 220 次训练）
+# ③ 全量复现（2 数据集 × 22 模型；默认 1 个种子 seed=0，结果输出到
+#    数据盘新目录 /autodl-fs/data/RethinkingTMSC_output_1seed/）
 bash repro/run_all.sh
 ```
 
@@ -35,6 +36,9 @@ bash repro/run_all.sh
 # 只跑文本基线 BERT（先验证管线，约半小时~1小时）
 MODELS="Bert" bash repro/run_all.sh
 
+# 恢复 5 种子（0/42/199/2022/11122），共 2 × 22 × 5 = 220 次训练
+SEEDS="0 42 199 2022 11122" bash repro/run_all.sh
+
 # 双卡并行 + 断点续跑（已有输出自动跳过）
 DEVICES=0,1 SKIP_EXISTING=1 bash repro/run_all.sh
 
@@ -42,17 +46,19 @@ DEVICES=0,1 SKIP_EXISTING=1 bash repro/run_all.sh
 MODELS="Res22Bert Bert2Vit" bash repro/run_all.sh
 ```
 
-运行日志在 `logs/`，每个实验输出在 `Code/output/<数据集>/<模型>/<种子>_output_test/`
-（含 `eval_results.txt`、`pred.txt`、`true.txt`）。
+运行日志在 `logs/`，每个实验输出在
+`/autodl-fs/data/RethinkingTMSC_output_1seed/<数据集>/<模型>/<种子>_output_test/`
+（含 `eval_results_test.txt`、`pred.txt`、`true.txt`）。
+如需换输出位置，可在运行时指定 `OUTPUT_ROOT=/autodl-fs/data/你的目录`。
 
 ## 3. 结果回收
 
 ```bash
-python repro/collect_results.py Code/output
-# 生成 Code/output/results_all.csv 与 results_summary.csv
+python repro/collect_results.py /autodl-fs/data/RethinkingTMSC_output_1seed
+# 生成 /autodl-fs/data/RethinkingTMSC_output_1seed/results_all.csv 与 results_summary.csv
 ```
 
-把 `Code/output/` 下的结果拷回本仓库的 `output/` 后，
+把该目录下的 `results_all.csv`、`results_summary.csv` 拷回本仓库后，
 本机已有的分析脚本（`analysis/collect_results.py`、`analysis/error_analysis.py`、
 `analysis/make_figures.py`）可直接重新生成统计表与论文配图。
 
@@ -79,9 +85,10 @@ python repro/collect_results.py Code/output
    `data/twitter2017_images/`（原始 IJCAI2019 数据集）的图片整理完毕并逐张核对
    （Twitter15 3502 张、Twitter17 2908 张，缺失 0），无需再下载图片；若使用其他来源，
    请务必核对图片数量与 tsv 中的 ImageID 是否一一对应。
-7. **评测口径**：训练 8 个 epoch，batch=32，学习率 2e-5，5 个种子
-   （0/42/199/2022/11122）；`run_data_analysis.py` 训练中在 dev 上选最优、最后在 test 上评测，
-   `eval_results.txt` 即为 test 结果。
+7. **评测口径**：训练 8 个 epoch，batch=32，学习率 2e-5；种子默认 1 个（seed=0），
+   需要稳定统计时可用 `SEEDS="0 42 199 2022 11122"` 恢复 5 种子；
+   `run_data_analysis.py` 训练中在 dev 上选最优、最后在 test 上评测，
+   `eval_results_test.txt` 即为 test 结果。
 
 ## 5. 预期结果对照
 

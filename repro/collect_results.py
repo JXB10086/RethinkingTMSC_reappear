@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """在服务器上汇总复现结果。
-用法: python repro/collect_results.py [输出根目录, 默认 Code/output]
+用法: python repro/collect_results.py [输出根目录, 默认 /autodl-fs/data/RethinkingTMSC_output_1seed]
+自动扫描 <根目录>/<数据集>/<模型>/<种子>_output_test/ 下的所有种子（1 个或 5 个均可），
 生成 <根目录>/results_all.csv 与 results_summary.csv，可拷回本仓库 output/ 后
 复用 analysis/ 下的统计与作图脚本。
 """
@@ -12,8 +13,7 @@ import statistics as st
 from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUTPUT = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(ROOT, "Code", "output")
-SEEDS = ["0", "42", "199", "2022", "11122"]
+OUTPUT = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else "/autodl-fs/data/RethinkingTMSC_output_1seed"
 
 
 def parse_eval(path):
@@ -27,15 +27,24 @@ def parse_eval(path):
 
 
 rows = []
+if not os.path.isdir(OUTPUT):
+    print(f"输出目录不存在: {OUTPUT}")
+    sys.exit(0)
 for ds in sorted(os.listdir(OUTPUT)):
     ds_dir = os.path.join(OUTPUT, ds)
     if not os.path.isdir(ds_dir):
         continue
     for model in sorted(os.listdir(ds_dir)):
-        for seed in SEEDS:
+        model_dir = os.path.join(ds_dir, model)
+        if not os.path.isdir(model_dir):
+            continue
+        seed_dirs = sorted(d for d in os.listdir(model_dir)
+                           if d.endswith("_output_test") and os.path.isdir(os.path.join(model_dir, d)))
+        for seed_dir in seed_dirs:
+            seed = seed_dir[: -len("_output_test")]
             ef = None
             for fname in ("eval_results_test.txt", "eval_results.txt"):
-                cand = os.path.join(ds_dir, model, seed + "_output_test", fname)
+                cand = os.path.join(model_dir, seed_dir, fname)
                 if os.path.exists(cand):
                     ef = cand
                     break

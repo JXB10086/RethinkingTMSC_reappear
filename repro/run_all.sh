@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# 全量复现 RethinkingTMSC：对 2 个数据集 x 22 个模型 x 5 个种子进行训练与测试。
+# 全量复现 RethinkingTMSC：对 2 个数据集 x 22 个模型进行训练与测试。
+# 默认只跑 1 个随机种子（seed=0），新结果输出到 OUTPUT_ROOT（默认数据盘新目录）。
 # 用法示例:
 #   bash repro/run_all.sh                          # 全部模型
 #   MODELS="Bert" bash repro/run_all.sh            # 只跑文本基线（快速验证管线）
+#   SEEDS="0 42 199 2022 11122" bash repro/run_all.sh  # 恢复 5 种子
 #   DEVICES=0,1 bash repro/run_all.sh              # 使用两张卡（简单按轮次交替）
 #   SKIP_EXISTING=1 bash repro/run_all.sh          # 跳过已有输出（断点续跑）
 set -u
@@ -13,9 +15,10 @@ export PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 DEVICES="${DEVICES:-0}"
 LR="${LR:-2e-5}"
 EPOCHS="${EPOCHS:-8.0}"
-SEEDS="${SEEDS:-0 42 199 2022 11122}"
+SEEDS="${SEEDS:-0}"
 DATASETS="${DATASETS:-Twitter15 Twitter17}"
 SKIP_EXISTING="${SKIP_EXISTING:-1}"
+OUTPUT_ROOT="${OUTPUT_ROOT:-/autodl-fs/data/RethinkingTMSC_output_1seed}"
 MODELS="${MODELS:-}"
 
 if [ -n "$MODELS" ]; then
@@ -42,7 +45,7 @@ job_idx=0
 
 run_one() {
   local ds=$1 model=$2 enc=$3 seed=$4 device=$5
-  local out="${OUTPUT_ROOT:-Code/output}/${ds}/${model}/${seed}_output_test"
+  local out="${OUTPUT_ROOT}/${ds}/${model}/${seed}_output_test"
   if [ "$SKIP_EXISTING" = "1" ] && { [ -f "$out/eval_results_test.txt" ] || [ -f "$out/eval_results.txt" ]; }; then
     echo "[skip] $ds/$model/$seed 已存在"
     return 0
@@ -86,4 +89,4 @@ done
 wait
 
 echo "全部完成，汇总结果:"
-python repro/collect_results.py "${OUTPUT_ROOT:-Code/output}"
+python repro/collect_results.py "$OUTPUT_ROOT"
