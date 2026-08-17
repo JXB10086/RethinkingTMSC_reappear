@@ -11,6 +11,8 @@ set -u
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 export PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}"
+# 服务器直连 huggingface.co 会超时，默认走国内镜像；可自行覆盖
+export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
 
 DEVICES="${DEVICES:-0}"
 LR="${LR:-2e-5}"
